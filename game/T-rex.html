@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinosaur Game</title>
+    <style>
+        body {
+            padding: 25px;
+            background-color: white;
+            color: black;
+            font-size: 25px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('your_background_image.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #game {
+            height: 300px;
+            width: 100%;
+            border: 2px solid black;
+            margin: 3rem auto;
+            position: relative;
+            overflow: hidden;
+            display: none; 
+        }
+        #ground {
+            height: 30px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            background: url('yutanilolo.png') repeat-x;
+            left: 0;
+            animation: groundMove 1.5s linear infinite; 
+        }
+        .cactus {
+            height: 70px;
+            width: 70px;
+            position: absolute;
+            bottom: -20px;
+            left: 100%;
+            background-size: contain;
+            animation: move 2s linear infinite; 
+        }
+
+        .cactus1 {
+            background-image: url('cactus_1.png');
+        }
+
+        .cactus2 {
+            background-image: url('cactus_2.png');
+        }
+
+        .cactus3 {
+            background-image: url('cactus_3.png');
+        }
+
+        @keyframes move {
+            0% {
+                left: 100%;
+            }
+            100% {
+                left: -100px; 
+            }
+        }
+
+        @keyframes groundMove {
+            100% {
+                background-position-x: -200px; 
+            }
+        }
+
+        #character {
+            height: 70px;
+            width: 70px;
+            position: absolute;
+            bottom: 0;
+            left: 30px;
+            background-image: url('dino_run1.png');
+            background-size: contain;
+            animation: run 0.8s steps(8) infinite;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes run {
+            100% {
+                background-image: url('dino_run2.png');
+            }
+        }
+
+        #result {
+            height: 200px;
+            width: 400px;
+            background-color: white;
+            margin: 3rem auto;
+            text-align: center;
+            border-radius: 20px;
+            display: none;
+        }
+
+        #score {
+            font-size: 2.2rem;
+            color: brown;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            background-color: black;
+            color: cyan;
+            font-size: 25px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button {
+            border-radius: 5px;
+            border: #CCC 1px solid;
+            height: 40px;
+        }fieldset{
+            border: #CCC 1px solid;
+            border-radius: 5px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+   
+    <fieldset>
+    <div id="startScreen">
+        <h1>Welcom to T-rex</h1>
+        <p>Press Enter to start</p>
+    </div>
+    </fieldset>
+    <div id="game">
+        <div id="ground"></div>
+        <div class="cactus cactus1" style="bottom: 0;"></div>
+        <div class="cactus cactus2" style="bottom: 0;"></div>
+        <div class="cactus cactus3" style="bottom: 0;"></div>
+        <div id="character"></div>
+        <div id="score">Score: 0</div>
+    </div>
+    <div id="result">
+        <h1>Game Over</h1>
+        <p id="finalScore"></p>
+        <button id="btn" onclick="restartGame()">Restart</button>
+    </div>
+    <audio id="sound" src="sound.mp3"></audio>
+    <audio id="gameOverSound" src="MARIOGAMEOVER.mp3"></audio>
+
+    <script>
+        var character = document.getElementById("character");
+        var result = document.getElementById("result");
+        var game = document.getElementById("game");
+        var score = document.getElementById("score");
+        var finalScore = document.getElementById("finalScore");
+        var count = 0;
+        var sound = document.getElementById("sound");
+        var isJumping = false;
+
+        function gameOver() {
+            document.getElementById("gameOverSound").play(); 
+        }
+
+        function jump() {
+            if (!isJumping) {
+                isJumping = true;
+                sound.play();
+                var jumpCount = 0;
+                var jumpInterval = setInterval(function() {
+                    var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
+                    if ((characterBottom < 170) && (jumpCount < 20)) {
+                        character.style.bottom = (characterBottom + 10) + "px";
+                    } else if (jumpCount >= 15) {
+                        var fallInterval = setInterval(function() {
+                            var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
+                            if ((characterBottom > 0)) {
+                                character.style.bottom = (characterBottom - 10) + "px";
+                            } else {
+                                clearInterval(fallInterval);
+                                isJumping = false;
+                            }
+                        }, 15);
+                        clearInterval(jumpInterval);
+                    }
+                    jumpCount++;
+                }, 20);
+            }
+        }
+
+        function startGame() {
+            document.getElementById("startScreen").style.display = "none";
+            document.getElementById("game").style.display = "block";
+            document.addEventListener("keydown", function(event) {
+                if (!isJumping) {
+                    jump();
+                } else {
+                    jump();
+                    false;
+                }
+            });
+        }
+
+       
+        
+
+        function restartGame() {
+            location.reload();
+        }
+
+        document.addEventListener("keydown", startGame);
+
+        var cacti = document.querySelectorAll(".cactus");
+
+        setInterval(function checkCollision() {
+            cacti.forEach(function(cactus) {
+                var cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
+                var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
+                if ((cactusLeft < 60) && (characterBottom < 80)) {
+                    result.style.display = "block"; 
+                    game.style.display = "none";
+                    finalScore.innerHTML = `Score: ${count}`;
+                    gameOver();
+                }
+            });
+        }, 10);
+
+        setInterval(function updateScore() {
+            count++;
+            score.innerHTML = `Score: ${count}`;
+        }, 1000);
+    </script>
+</body>
+</html>
