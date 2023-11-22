@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dinosaur Game</title>     
+</head>
+<body> 
+    <div id="startScreen">
+        <h1>Welcom to T-rex</h1>
+        <p>Press Enter to start</p>
+    </div>
+    
+    <div id="game">
+        <div id="ground"></div>
+        <div class="cactus cactus1" style="bottom: 0;"></div>
+       
+        <div id="character"></div>
+        <div id="score">Score: 0</div>
+    </div>
+    <div id="result">
+        <h1>Game Over</h1>
+        <p id="finalScore"></p>
+        <button id="btn" onclick="restartGame()">Restart</button>
+    </div>
+    <audio id="sound" src="sound.mp3"></audio>
+    <audio id="gameOverSound" src="MARIOGAMEOVER.mp3"></audio>
+</body>
+</html>
