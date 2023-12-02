@@ -13,7 +13,7 @@ function gameOver() {
 }
 
 function jump() {
-    if (gameStarted && !isJumping) {
+    if (!isJumping) {
         isJumping = true;
         sound.play();
         var jumpCount = 0;
@@ -43,6 +43,7 @@ function startGame() {
         gameStarted = true;
         document.getElementById("startScreen").style.display = "none";
         document.getElementById("game").style.display = "block";
+        jump(); // Automatically trigger the first jump when the game starts
     }
 }
 
@@ -53,6 +54,7 @@ function restartGame() {
     result.style.display = "none"; // Hide the result
     finalScore.innerHTML = ""; // Clear the final score
     document.getElementById("game").style.display = "block"; // Show the game
+    jump(); // Automatically trigger the first jump when the game restarts
 }
 
 document.addEventListener("keydown", function (event) {
