@@ -43,7 +43,6 @@ function startGame() {
         gameStarted = true;
         document.getElementById("startScreen").style.display = "none";
         document.getElementById("game").style.display = "block";
-        jump();
     }
 }
 
@@ -54,11 +53,10 @@ function restartGame() {
     result.style.display = "none";
     finalScore.innerHTML = "";
     document.getElementById("game").style.display = "block";
-    jump();
 }
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "Space") {
+    if (event.code === "Space" && !isJumping) {
         event.preventDefault();
         if (!gameStarted) {
             startGame();
