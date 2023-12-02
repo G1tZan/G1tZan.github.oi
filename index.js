@@ -73,4 +73,3 @@ var character = document.getElementById("character");
             count++;
             score.innerHTML = `Score: ${count}`;
         }, 1000);
-
