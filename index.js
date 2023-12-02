@@ -43,18 +43,18 @@ function startGame() {
         gameStarted = true;
         document.getElementById("startScreen").style.display = "none";
         document.getElementById("game").style.display = "block";
-        jump(); // Automatically trigger the first jump when the game starts
+        jump();
     }
 }
 
 function restartGame() {
-    gameStarted = false; // Reset the gameStarted flag
-    count = 0; // Reset the score
-    score.innerHTML = "Score: 0"; // Update the score display
-    result.style.display = "none"; // Hide the result
-    finalScore.innerHTML = ""; // Clear the final score
-    document.getElementById("game").style.display = "block"; // Show the game
-    jump(); // Automatically trigger the first jump when the game restarts
+    gameStarted = false;
+    count = 0;
+    score.innerHTML = "Score: 0";
+    result.style.display = "none";
+    finalScore.innerHTML = "";
+    document.getElementById("game").style.display = "block";
+    jump();
 }
 
 document.addEventListener("keydown", function (event) {
@@ -80,7 +80,7 @@ setInterval(function checkCollision() {
                 game.style.display = "none";
                 finalScore.innerHTML = `Score: ${count}`;
                 gameOver();
-                gameStarted = false; // Set game as not started on collision
+                gameStarted = false;
             }
         });
     }
