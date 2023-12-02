@@ -47,11 +47,12 @@ function restartGame() {
 }
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "S" && document.getElementById("startScreen").style.display === "block") {
+    if (event.code === "Enter" && document.getElementById("startScreen").style.display === "block") {
         event.preventDefault();
         startGame();
     }
 });
+
 
 document.addEventListener("keydown", function (event) {
     if (event.code === "Space") {
