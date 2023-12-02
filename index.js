@@ -39,9 +39,11 @@ function jump() {
 }
 
 function startGame() {
-    gameStarted = true; // Set the game as started when starting the game
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("game").style.display = "block";
+    if (!gameStarted) {
+        gameStarted = true;
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("game").style.display = "block";
+    }
 }
 
 function restartGame() {
@@ -49,7 +51,7 @@ function restartGame() {
 }
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "Space" && !gameStarted) { // Start the game only if it hasn't started
+    if (event.code === "Space" && !gameStarted) {
         event.preventDefault();
         startGame();
         jump();
@@ -59,16 +61,19 @@ document.addEventListener("keydown", function (event) {
 var cacti = document.querySelectorAll(".cactus");
 
 setInterval(function checkCollision() {
-    cacti.forEach(function (cactus) {
-        var cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
-        var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
-        if ((cactusLeft < 60) && (characterBottom < 80)) {
-            result.style.display = "block";
-            game.style.display = "none";
-            finalScore.innerHTML = `Score: ${count}`;
-            gameOver();
-        }
-    });
+    if (gameStarted) {
+        cacti.forEach(function (cactus) {
+            var cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
+            var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
+            if ((cactusLeft < 60) && (characterBottom < 80)) {
+                result.style.display = "block";
+                game.style.display = "none";
+                finalScore.innerHTML = `Score: ${count}`;
+                gameOver();
+                gameStarted = false; // Set game as not started on collision
+            }
+        });
+    }
 }, 10);
 
 setInterval(function updateScore() {
