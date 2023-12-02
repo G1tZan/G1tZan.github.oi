@@ -47,7 +47,7 @@ function restartGame() {
 }
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "KeyS" && document.getElementById("startScreen").style.display === "block") {
+    if (event.code === "S""s" && document.getElementById("startScreen").style.display === "block") {
         event.preventDefault();
         startGame();
     }
