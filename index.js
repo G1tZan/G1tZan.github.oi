@@ -49,15 +49,10 @@ function restartGame() {
 document.addEventListener("keydown", function (event) {
     if (event.code === "Enter" && document.getElementById("startScreen").style.display === "block") {
         event.preventDefault();
-        startGame();
-    }
-});
-
-
-document.addEventListener("keydown", function (event) {
-    if (event.code === "Space") {
+        startGame(); // Start the game on Enter key press
+    } else if (event.code === "Space") {
         event.preventDefault();
-        jump();
+        jump(); // Jump on Space key press
     }
 });
 
