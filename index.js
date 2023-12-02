@@ -47,14 +47,22 @@ function startGame() {
 }
 
 function restartGame() {
-    location.reload();
+    gameStarted = false; // Reset the gameStarted flag
+    count = 0; // Reset the score
+    score.innerHTML = "Score: 0"; // Update the score display
+    result.style.display = "none"; // Hide the result
+    finalScore.innerHTML = ""; // Clear the final score
+    document.getElementById("game").style.display = "block"; // Show the game
 }
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "Space" && !gameStarted) {
+    if (event.code === "Space") {
         event.preventDefault();
-        startGame();
-        jump();
+        if (!gameStarted) {
+            startGame();
+        } else {
+            jump();
+        }
     }
 });
 
