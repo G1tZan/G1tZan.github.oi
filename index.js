@@ -49,8 +49,13 @@ var character = document.getElementById("character");
         document.addEventListener("keydown", function(event) {
             if (event.code === "Space") {
                 event.preventDefault();
-                startGame();
+                
                 jump();
+            }
+        });
+ document.addEventListener("keydown", function(event) {
+            if (event.code === 'Enter') {
+                startGame();
             }
         });
     
