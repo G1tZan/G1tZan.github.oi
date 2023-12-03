@@ -11,31 +11,38 @@ var character = document.getElementById("character");
             document.getElementById("gameOverSound").play(); 
         }
     
-        function jump() {
-            if (!isJumping) {
-                isJumping = true;
-                sound.play();
-                var jumpCount = 0;
-                var jumpInterval = setInterval(function() {
+       function jump() {
+    if (!isJumping) {
+        isJumping = true;
+        sound.play();
+        var jumpCount = 0;
+        var jumpInterval = setInterval(function() {
+            var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
+            if ((characterBottom < 200) && (jumpCount < 20)) {
+                var jumpHeight = 150; // The height of the jump
+                var jumpDuration = 20; // The duration of the jump
+                var jumpIncrement = jumpHeight / ((jumpDuration / 2) ** 2); // Calculate the increment based on jump duration and height
+
+                // Calculate the new position based on a quadratic curve
+                var newPosition = -0.5 * jumpIncrement * ((jumpCount - (jumpDuration / 2)) ** 2) + jumpHeight;
+
+                character.style.bottom = newPosition + "px";
+            } else if (jumpCount >= 15) {
+                var fallInterval = setInterval(function() {
                     var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
-                    if ((characterBottom < 170) && (jumpCount < 20)) {
-                        character.style.bottom = (characterBottom + 10) + "px";
-                    } else if (jumpCount >= 15) {
-                        var fallInterval = setInterval(function() {
-                            var characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue("bottom"));
-                            if ((characterBottom > 0)) {
-                                character.style.bottom = (characterBottom - 10) + "px";
-                            } else {
-                                clearInterval(fallInterval);
-                                isJumping = false;
-                            }
-                        }, 15);
-                        clearInterval(jumpInterval);
+                    if ((characterBottom > 0)) {
+                        character.style.bottom = (characterBottom - 10) + "px";
+                    } else {
+                        clearInterval(fallInterval);
+                        isJumping = false;
                     }
-                    jumpCount++;
-                }, 20);
+                }, 15);
+                clearInterval(jumpInterval);
             }
-        }
+            jumpCount++;
+        }, 20);
+    }
+}
     
         function startGame() {
             document.getElementById("startScreen").style.display = "none";
