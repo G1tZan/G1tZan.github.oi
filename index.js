@@ -10,8 +10,7 @@ var character = document.getElementById("character");
         function gameOver() {
             document.getElementById("gameOverSound").play(); 
         }
-    
-       function jump() {
+    function jump() {
     if (!isJumping) {
         isJumping = true;
         sound.play();
